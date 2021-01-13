@@ -1,28 +1,30 @@
 import { IsEmail, IsNotEmpty, Length } from "class-validator";
 import {
-  Entity,
+  Entity as TOEntity,
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
   Index,
   CreateDateColumn,
   BeforeInsert,
+  OneToMany,
 } from "typeorm";
 import bcrypt from "bcrypt";
 import { classToPlain, Exclude } from "class-transformer";
+import Entity from "./Entity";
+import Post from "./Post";
 
-@Entity("users")
-export class User extends BaseEntity {
+@TOEntity("users")
+export default class User extends Entity {
   constructor(user: Partial<User>) {
     super();
     Object.assign(this, user);
   }
-  @Exclude()
-  @PrimaryGeneratedColumn()
-  id: number;
+  //   @Exclude()
+  //   @PrimaryGeneratedColumn()
+  //   id: number;
 
   @Index()
-  //   @IsEmail({ message: "Заполните поле Email, please." })
   @IsEmail({}, { message: "Incorrect email" })
   @IsNotEmpty({ message: "Заполните поле Email, please." })
   @Column({ unique: true })
@@ -38,11 +40,14 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 
-  @CreateDateColumn()
-  updateddAt: Date;
+  //   @CreateDateColumn()
+  //   createdAt: Date;
+
+  //   @CreateDateColumn()
+  //   updateddAt: Date;
 
   @BeforeInsert()
   async hashPassword() {
