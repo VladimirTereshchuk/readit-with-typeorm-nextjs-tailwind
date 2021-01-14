@@ -1,11 +1,8 @@
 import { IsEmail, IsNotEmpty, Length } from "class-validator";
 import {
   Entity as TOEntity,
-  PrimaryGeneratedColumn,
   Column,
-  BaseEntity,
   Index,
-  CreateDateColumn,
   BeforeInsert,
   OneToMany,
 } from "typeorm";
@@ -20,9 +17,6 @@ export default class User extends Entity {
     super();
     Object.assign(this, user);
   }
-  //   @Exclude()
-  //   @PrimaryGeneratedColumn()
-  //   id: number;
 
   @Index()
   @IsEmail({}, { message: "Incorrect email" })
@@ -42,12 +36,6 @@ export default class User extends Entity {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
-
-  //   @CreateDateColumn()
-  //   createdAt: Date;
-
-  //   @CreateDateColumn()
-  //   updateddAt: Date;
 
   @BeforeInsert()
   async hashPassword() {

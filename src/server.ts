@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth";
 import postRoutes from "./routes/posts";
+import subRoutes from "./routes/subs";
 dotenv.config();
 
 const PORT = process.env.PORT;
@@ -18,9 +19,10 @@ app.use(morgan("dev"));
 app.use(trim);
 app.use(cookieParser());
 
-app.get("/", (req, res) => res.send("Hello World"));
+app.get("/", (_, res) => res.send("Hello World"));
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/subs", subRoutes);
 
 app.listen(PORT, async () => {
   console.log(`Server running at http://localhost:${PORT}`);
