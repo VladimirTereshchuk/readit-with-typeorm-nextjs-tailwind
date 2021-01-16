@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-// import classNames from 'classNames'
+import classNames from "classnames";
 
 import { Post } from "../types";
 import Axios from "axios";
@@ -60,10 +60,9 @@ export const PostCard: React.FC<PostCardProps> = ({
           onClick={() => vote(1)}
         >
           <i
-            // className={classNames("icon-arrow-up", {
-            //   // "text-red-500": userVote === 1,
-            // })}
-            className="icon-arrow-up"
+            className={classNames("icon-arrow-up", {
+              "text-red-500": userVote === 1,
+            })}
           ></i>
         </div>
         <p className="text-xs font-bold">{voteScore}</p>
@@ -73,10 +72,9 @@ export const PostCard: React.FC<PostCardProps> = ({
           onClick={() => vote(-1)}
         >
           <i
-            // className={classNames("icon-arrow-down", {
-            //   // "text-blue-600": userVote === -1,
-            // })}
-            className="icon-arrow-down"
+            className={classNames("icon-arrow-down", {
+              "text-blue-600": userVote === -1,
+            })}
           ></i>
         </div>
       </div>
