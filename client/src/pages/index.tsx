@@ -6,7 +6,7 @@ import { PostCard } from "../components/PostCard";
 // import dayjs from "dayjs";
 // import relativeTime from "dayjs/plugin/relativeTime";
 
-// import { Post } from "../types";
+import { Post } from "../types";
 
 // dayjs.extend(relativeTime);
 
@@ -28,7 +28,7 @@ export default function Home() {
         {/* Post feed */}
         <div className="w-160">
           {posts.map((post) => {
-            return <PostCard post={post} key={post.id} />;
+            return <PostCard post={post} key={post.identifier} />;
           })}
         </div>
         <div className="w-40">Sidebar</div>
