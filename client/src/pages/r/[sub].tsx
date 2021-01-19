@@ -8,7 +8,7 @@ import { PostCard } from "../../components/PostCard";
 import { Sub } from "../../types";
 import { useAuthState } from "../../context/auth";
 import Axios from "axios";
-// import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/Sidebar";
 
 export default function SubPage() {
   // Local state
@@ -133,6 +133,7 @@ export default function SubPage() {
           {/* Posts & Sidebar */}
           <div className="container flex pt-5">
             <div className="w-160">{postsMarkup}</div>
+            <Sidebar sub={sub} />
           </div>
         </Fragment>
       )}
