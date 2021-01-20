@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import Axios from "axios";
 import useSWR from "swr";
-// import dayjs from "dayjs";
-// import relativeTime from "dayjs/plugin/relativeTime";
 
 import { PostCard } from "../components/PostCard";
-import { Post, Sub } from "../types";
+import { Sub } from "../types";
 import Image from "next/image";
-
-// dayjs.extend(relativeTime);
 
 export default function Home() {
   const { data: posts } = useSWR("/posts");
@@ -42,19 +36,18 @@ export default function Home() {
                   key={sub.name}
                   className="flex items-center px-4 py-2 text-xs border-b"
                 >
-                  <div className="mr-2 overflow-hidden rounded-full cursor-pointer">
-                    <Link href={`/r/${sub.name}`}>
-                      <Image
-                        src={sub.imageUrl}
-                        alt="Sub"
-                        width={(6 * 16) / 4}
-                        // width="28"
-                        height={(6 * 16) / 4}
-                      />
-                    </Link>
-                  </div>
                   <Link href={`/r/${sub.name}`}>
-                    <a className="font-bold hover:cursor-pointer">
+                    <Image
+                      className="mr-2 overflow-hidden rounded-full cursor-pointer"
+                      src={sub.imageUrl}
+                      alt="Sub"
+                      width={(6 * 16) / 4}
+                      // width="28"
+                      height={(6 * 16) / 4}
+                    />
+                  </Link>
+                  <Link href={`/r/${sub.name}`}>
+                    <a className="ml-2 font-bold hover:cursor-pointer">
                       /r/{sub.name}
                     </a>
                   </Link>

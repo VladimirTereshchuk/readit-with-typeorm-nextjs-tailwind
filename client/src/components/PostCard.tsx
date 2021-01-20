@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Fragment, useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import classNames from "classnames";
@@ -37,14 +36,16 @@ export const PostCard: React.FC<PostCardProps> = ({
   },
 }) => {
   const vote = async (value) => {
+    // If vote is the same reset vote
+    if (value === userVote) value = 0;
+
     try {
       const res = await Axios.post("/misc/vote", {
         identifier,
         slug,
         value,
       });
-
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.log(err);
     }
