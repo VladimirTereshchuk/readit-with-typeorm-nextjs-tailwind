@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import Axios from "axios";
 import useSWR from "swr";
-// import dayjs from "dayjs";
-// import relativeTime from "dayjs/plugin/relativeTime";
 
 import { PostCard } from "../components/PostCard";
-import { Post, Sub } from "../types";
+import { Sub } from "../types";
 import Image from "next/image";
-
-// dayjs.extend(relativeTime);
 
 export default function Home() {
   const { data: posts } = useSWR("/posts");
