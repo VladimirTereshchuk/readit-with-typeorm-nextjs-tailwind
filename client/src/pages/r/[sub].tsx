@@ -107,11 +107,14 @@ export default function SubPage() {
             <div className="h-20 bg-white">
               <div className="container relative flex">
                 {/* <div className="absolute -top-4 "> */}
-                <div className="absolute" style={{ top: -15 }}>
+                <div
+                  className="absolute border-2 border-white rounded-full"
+                  style={{ top: -15 }}
+                >
                   <Image
                     src={sub.imageUrl}
                     alt="Sub"
-                    className={classNames("rounded-full", {
+                    className={classNames("rounded-full ", {
                       "cursor-pointer": ownSub,
                     })}
                     onClick={() => openFileInput("image")}
