@@ -114,7 +114,7 @@ export default function SubPage() {
                   <Image
                     src={sub.imageUrl}
                     alt="Sub"
-                    className={classNames("rounded-full ", {
+                    className={classNames("rounded-full", {
                       "cursor-pointer": ownSub,
                     })}
                     onClick={() => openFileInput("image")}
