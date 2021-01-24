@@ -5,6 +5,8 @@ import classNames from "classnames";
 
 import { Post } from "../types";
 import Axios from "axios";
+import { useAuthState } from "../context/auth";
+import { useRouter } from "next/router";
 
 dayjs.extend(relativeTime);
 
@@ -18,6 +20,7 @@ const ActionButton = ({ children }) => {
 
 interface PostCardProps {
   post: Post;
+  revalidate: Function;
 }
 
 export const PostCard: React.FC<PostCardProps> = ({
@@ -34,8 +37,12 @@ export const PostCard: React.FC<PostCardProps> = ({
     url,
     username,
   },
+  revalidate,
 }) => {
+  const { authenticated } = useAuthState();
+  const router = useRouter();
   const vote = async (value) => {
+    if (!authenticated) router.push("/login");
     // If vote is the same reset vote
     if (value === userVote) value = 0;
 
@@ -45,6 +52,7 @@ export const PostCard: React.FC<PostCardProps> = ({
         slug,
         value,
       });
+      revalidate();
       // console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -52,7 +60,11 @@ export const PostCard: React.FC<PostCardProps> = ({
   };
 
   return (
-    <div key={identifier} className="flex mb-4 bg-white rounded">
+    <div
+      key={identifier}
+      className="flex mb-4 bg-white rounded"
+      id={identifier}
+    >
       {/* Vote section */}
       <div className="w-10 py-3 text-center bg-gray-200 rounded-l">
         {/* Upvote */}

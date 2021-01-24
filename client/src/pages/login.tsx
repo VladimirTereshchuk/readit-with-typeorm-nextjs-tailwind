@@ -31,6 +31,7 @@ export default function Register() {
 
       dispatch("LOGIN", res.data);
 
+      // window.location.reload();
       router.back();
     } catch (err) {
       setErrors(err.response.data);
