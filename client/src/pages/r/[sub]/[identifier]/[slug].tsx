@@ -26,11 +26,11 @@ export default function PostPage() {
   const router = useRouter();
   const { identifier, sub, slug } = router.query;
 
-  const { data: post, error } = useSWR<Post>(
+  const { data: post, revalidate, error } = useSWR<Post>(
     identifier && slug ? `/posts/${identifier}/${slug}` : null
   );
 
-  const { data: comments, revalidate } = useSWR<Comment[]>(
+  const { data: comments, revalidate: revidateComment } = useSWR<Comment[]>(
     identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
   );
 
@@ -56,6 +56,7 @@ export default function PostPage() {
       });
 
       revalidate();
+      revidateComment();
     } catch (err) {
       console.log(err);
     }

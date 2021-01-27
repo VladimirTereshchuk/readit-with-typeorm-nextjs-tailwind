@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Axios from "axios";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 
 import InputGroup from "../components/InputGroup";
 
@@ -31,7 +31,6 @@ export default function Register() {
 
       dispatch("LOGIN", res.data);
 
-      // window.location.reload();
       router.back();
     } catch (err) {
       setErrors(err.response.data);
