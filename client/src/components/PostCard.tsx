@@ -45,7 +45,6 @@ export const PostCard: React.FC<PostCardProps> = ({
   const router = useRouter();
 
   const isInSubPage = router.pathname === "/r/[sub]"; // /r/[sub]
-  console.log(sub);
 
   const vote = async (value) => {
     if (!authenticated) router.push("/login");
