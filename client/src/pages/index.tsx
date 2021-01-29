@@ -18,25 +18,20 @@ export default function Home() {
 
   const router = useRouter();
 
-  console.log(router);
-
   const {
     data,
     error,
-    mutate,
     size: page,
     setSize: setPage,
     isValidating,
     revalidate,
-  } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`);
+  } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`, {
+    revalidateAll: true,
+  });
+
+  const isInitialLoading = !data && !error;
 
   const posts: Post[] = data ? [].concat(...data) : [];
-
-  useEffect(() => {
-    if (authenticated) {
-      // window.location.reload();
-    }
-  }, [authenticated]);
 
   useEffect(() => {
     if (!posts || posts.length === 0) return;
@@ -71,7 +66,9 @@ export default function Home() {
       <div className="container flex pt-4">
         {/* Posts feed */}
         <div className="w-full px-4 md:w-160 md:p-0">
-          {isValidating && <p className="text-lg text-center">Loading...</p>}
+          {isInitialLoading && (
+            <p className="text-lg text-center">Loading...</p>
+          )}
           {posts?.map((post) => (
             <PostCard
               post={post}

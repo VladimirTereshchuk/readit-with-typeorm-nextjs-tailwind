@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -20,7 +21,7 @@ const ActionButton = ({ children }) => {
 
 interface PostCardProps {
   post: Post;
-  revalidate: Function;
+  revalidate?: Function;
 }
 
 export const PostCard: React.FC<PostCardProps> = ({
@@ -36,11 +37,15 @@ export const PostCard: React.FC<PostCardProps> = ({
     commentCount,
     url,
     username,
+    sub,
   },
   revalidate,
 }) => {
   const { authenticated } = useAuthState();
   const router = useRouter();
+
+  const isInSubPage = router.pathname === "/r/[sub]"; // /r/[sub]
+
   const vote = async (value) => {
     if (!authenticated) router.push("/login");
     // If vote is the same reset vote
@@ -52,8 +57,7 @@ export const PostCard: React.FC<PostCardProps> = ({
         slug,
         value,
       });
-      revalidate();
-      // console.log(res.data);
+      if (revalidate) revalidate();
     } catch (err) {
       console.log(err);
     }
@@ -95,17 +99,22 @@ export const PostCard: React.FC<PostCardProps> = ({
       <div className="w-full p-2">
         {" "}
         <div className="flex items-center">
-          <Link href={`/r/${subName}`}>
-            <img
-              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-              className="w-6 h-6 mr-1 rounded-full cursor-pointer"
-            />
-          </Link>
-          <Link href={`/r/${subName}`}>
-            <a className="text-xs font-bold cursor-pointer hover:underline">
-              /r/{subName}
-            </a>
-          </Link>
+          {!isInSubPage && (
+            <>
+              <Link href={`/r/${subName}`}>
+                <img
+                  src={sub.imageUrl}
+                  className="w-6 h-6 mr-1 rounded-full cursor-pointer"
+                />
+              </Link>
+              <Link href={`/r/${subName}`}>
+                <a className="text-xs font-bold cursor-pointer hover:underline">
+                  /r/{subName}
+                </a>
+              </Link>
+              <span className="mx-1 text-xs text-gray-500">•</span>
+            </>
+          )}
           <p className="text-xs text-gray-500">
             <span className="mx-1">•</span>
             Posted by
